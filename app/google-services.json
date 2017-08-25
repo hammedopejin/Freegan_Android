@@ -1,0 +1,62 @@
+{
+  "project_info": {
+    "project_number": "358492250962",
+    "firebase_url": "https://freegan-42b40.firebaseio.com",
+    "project_id": "freegan-42b40",
+    "storage_bucket": "freegan-42b40.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:358492250962:android:ce96d7ee5a83c60d",
+        "android_client_info": {
+          "package_name": "com.planetpeopleplatform.freegan_android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "358492250962-vicji8a148bsen3hrip06m9cm676qefg.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.planetpeopleplatform.freegan_android",
+            "certificate_hash": "5c22bb5c796c5bac2ef719da6b8345a73f0b4b8e"
+          }
+        },
+        {
+          "client_id": "358492250962-u8setf3jrl87cln5fqd6q8oqik2il9mv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCIohw-aQA-a2BeBLZPVIzrcin9afsNJr8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "358492250962-0f8lbjkpqaqmlvvu0ebd7meomjmfqcmq.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.planetpeopleplatform.Freegan"
+              }
+            },
+            {
+              "client_id": "358492250962-u8setf3jrl87cln5fqd6q8oqik2il9mv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
