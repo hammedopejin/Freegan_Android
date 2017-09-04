@@ -50,6 +50,7 @@
                 android:layout_height="49dp"
                 android:layout_weight="1"
                 android:background="@color/Primary"
+                android:onClick="backBtn"
                 android:src="@drawable/add_image" />
 
             <EditText

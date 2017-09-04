@@ -105,7 +105,7 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        LoadTweets()
+        //LoadTweets()
     }
 
     fun LoadTweets(){
