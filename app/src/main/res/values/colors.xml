@@ -6,6 +6,7 @@
 
     <color name="Primary">#51B79F</color>
     <color name="Secondary">#49a797</color>
+    <color name="customRed">#DD2C00</color>
 
     <color name="blue"  >#FF33B5E5</color>
     <color name="purple" >#FFAA66CC</color>

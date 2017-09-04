@@ -3,10 +3,10 @@ package com.planetpeopleplatform.freegan_android
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 
-class MainActivity : AppCompatActivity() {
+class FeedActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_feed)
     }
 }

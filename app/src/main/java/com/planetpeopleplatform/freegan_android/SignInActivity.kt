@@ -109,20 +109,21 @@ class SignInActivity : AppCompatActivity() {
     }
 
     fun LoadTweets(){
-//        var currentUser =mAuth!!.currentUser
-//
-//        if(currentUser!=null) {
-//
-//
-//            var intent = Intent(this, MainActivity::class.java)
-//            intent.putExtra("email", currentUser.email)
-//            intent.putExtra("uid", currentUser.uid)
-//
-//            startActivity(intent)
-//        }
+        var currentUser =mAuth!!.currentUser
+
+        if(currentUser!=null) {
+
+
+            var intent = Intent(this, FeedActivity::class.java)
+            intent.putExtra("email", currentUser.email)
+            intent.putExtra("uid", currentUser.uid)
+
+            startActivity(intent)
+        }
     }
 
     val READIMAGE:Int=253
+
     fun checkPermission(){
 
         if(Build.VERSION.SDK_INT>=23){
