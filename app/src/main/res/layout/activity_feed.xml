@@ -45,12 +45,13 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageButton
-                android:id="@+id/imageButton6"
+                android:id="@+id/img_post"
                 android:layout_width="49dp"
                 android:layout_height="49dp"
                 android:layout_weight="1"
+                android:adjustViewBounds="true"
                 android:background="@color/Primary"
-                android:onClick="backBtn"
+                android:onClick="imgBtn"
                 android:src="@drawable/add_image" />
 
             <EditText
@@ -68,17 +69,20 @@
                 android:layout_height="49dp"
                 android:layout_weight="1"
                 android:background="@color/customRed"
+                android:onClick="backBtn"
                 android:src="@drawable/add_post" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
     <ListView
+        android:id="@+id/lvPosts"
         android:layout_width="344dp"
         android:layout_height="388dp"
         android:layout_marginBottom="0dp"
         android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
+        android:background="@color/whitebackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

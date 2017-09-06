@@ -91,7 +91,7 @@ class SignInActivity : AppCompatActivity() {
 
             var DownloadURL= taskSnapshot.downloadUrl!!.toString()
 
-            myRef.child("users").child(currentUser.uid).child("email").setValue(currentUser.email)
+            myRef.child("users").child(currentUser.uid).child("userName").setValue(currentUser.email)
             myRef.child("users").child(currentUser.uid).child("userImgUrl").setValue(DownloadURL)
             LoadTweets()
         }
@@ -105,7 +105,7 @@ class SignInActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        //LoadTweets()
+        LoadTweets()
     }
 
     fun LoadTweets(){
