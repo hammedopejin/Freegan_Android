@@ -74,7 +74,7 @@ class FeedActivity : AppCompatActivity() {
                 var myView = layoutInflater.inflate(R.layout.posts_ticket,null)
 
 
-                myRef.child("posts").child(mypost.postKey)
+                myRef.child("posts")
                         .addValueEventListener(object : ValueEventListener {
 
                             override fun onDataChange(dataSnapshot: DataSnapshot?) {
@@ -84,27 +84,15 @@ class FeedActivity : AppCompatActivity() {
                                     var td= dataSnapshot!!.value as HashMap<String,Any>
 
                                     for(key in td.keys){
-
-                                        var userInfo= td[key] as String
-
-                                        if(key.equals("userName")){
-                                            myView.userName.setText(userInfo)
-                                        }
-                                        if(key.equals("profileImgUrl")){
-                                            Picasso.with(context).load(userInfo).into(myView.user_img)
-                                        }
-                                        if(key.equals("imageUrl")){
-                                            Picasso.with(context).load(userInfo).into(myView.post_image)
-                                        }
-                                        if(key.equals("description")){
-                                            myView.caption.text = userInfo
-                                        }
-                                        if(key.equals("likes")){
-                                            myView.likes.text = userInfo
-                                        }
-
+//                                        Toast.makeText(applicationContext,mypost.likes.toString(),Toast.LENGTH_LONG).show()
+                                            myView.userName.text= mypost.userName
+                                            Picasso.with(context).load(mypost.profileImgUrl).into(myView.user_img)
+                                            Picasso.with(context).load(mypost.imageUrl).into(myView.post_image)
+                                            myView.caption.text = mypost.description
+                                            myView.likes.text =  "" + mypost.likes as Int
 
                                     }
+
 
                                 }catch (ex:Exception){}
 
@@ -217,7 +205,6 @@ class FeedActivity : AppCompatActivity() {
         loadImage()
     }
 
-//   (postKey:String, caption:String, imageUrl:String, userName:String, likes:Int, profileImgUrl:String)
 
     fun backBtn(view: View) {
 
@@ -228,9 +215,6 @@ class FeedActivity : AppCompatActivity() {
 //        view.caption.setText("")
 
 
-//        var intent = Intent(this, SignInActivity::class.java)
-//
-//        startActivity(intent)
     }
 
     fun LoadPost(){
@@ -251,7 +235,9 @@ class FeedActivity : AppCompatActivity() {
 
                                 var post= td[key] as HashMap<String,Any>
 
-                                ListPosts.add(Post(key, post))
+
+                                    ListPosts.add(Post(key, post))
+
 
                             }
 
