@@ -21,6 +21,7 @@
             android:layout_height="45dp"
             android:layout_marginHorizontal="20dp"
             android:adjustViewBounds="false"
+            android:onClick="signOuttapped"
             android:src="@drawable/sign_out" />
 
 
@@ -32,12 +33,14 @@
             android:textSize="30dp" />
 
         <ImageView
-            android:id="@+id/prfpic"
+            android:id="@+id/userSmallImg"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginHorizontal="30dp"
             android:adjustViewBounds="false"
+            android:clickable="true"
             android:layoutDirection="rtl"
+            android:onClick="goToProfile"
             android:src="@drawable/persoicon" />
     </android.support.v7.widget.Toolbar>
 

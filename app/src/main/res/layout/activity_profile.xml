@@ -1,6 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#253748"
+        android:backgroundTint="@color/Primary"
+        android:minHeight="?attr/actionBarSize">
+
+        <ImageView
+            android:id="@+id/goToFeedBtn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="20dp"
+            android:adjustViewBounds="false"
+            android:clickable="true"
+            android:onClick="goToFeed"
+            android:src="@drawable/sign_out" />
+
+
+        <android.support.v7.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="45dp"
+            android:text="Freegans"
+            android:textSize="30dp" />
+
+        <ImageView
+            android:id="@+id/prfIcon"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginHorizontal="30dp"
+            android:adjustViewBounds="false"
+            android:layoutDirection="rtl"
+            android:src="@drawable/persoicon" />
+    </android.support.v7.widget.Toolbar>
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="Select Image and Username to update profile"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <ImageView
+        android:id="@+id/profileImg"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center"
+        android:clickable="true"
+        android:onClick="imgBtn"
+        app:srcCompat="@drawable/persoicon" />
+
+    <EditText
+        android:id="@+id/etUserName"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="12dp"
+        android:background="@color/whiteback"
+        android:ems="10"
+        android:gravity="center"
+        android:inputType="textPersonName"
+        android:text="Username"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/updateBtn"
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:background="@color/Secondary"
+        android:text="Update profile" />
 
 </LinearLayout>

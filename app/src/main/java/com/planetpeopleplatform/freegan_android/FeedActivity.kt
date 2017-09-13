@@ -33,6 +33,11 @@ class FeedActivity : AppCompatActivity() {
     var adpater:PostAdpater? = null
     var myemail:String? = null
     var UserUID:String? = null
+    var userName:String? = null
+
+
+    val PRFNEW = 234
+    val PICK_IMAGE_CODE=123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +56,12 @@ class FeedActivity : AppCompatActivity() {
         LoadPost()
         loadUserPrfPic()
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        LoadPost()
+        loadUserPrfPic()
     }
 
 
@@ -139,7 +150,7 @@ class FeedActivity : AppCompatActivity() {
 
 
 
-    val PICK_IMAGE_CODE=123
+
     fun loadImage(){
 
         var intent= Intent(Intent.ACTION_PICK,
@@ -161,6 +172,9 @@ class FeedActivity : AppCompatActivity() {
             cursor.close()
             Picasso.with(this).load(selectedImage).into(img_post)
             uploadImage(BitmapFactory.decodeFile(picturePath))
+        }
+        if(requestCode==PRFNEW  && data!=null && resultCode == RESULT_OK){
+            userName = data.getStringExtra("userName")
         }
 
     }
@@ -202,7 +216,6 @@ class FeedActivity : AppCompatActivity() {
 
 
     fun loadUserPrfPic(){
-        //profilepic
         myRef.child("users").child(UserUID).addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot?) {
 
@@ -213,7 +226,7 @@ class FeedActivity : AppCompatActivity() {
                     for(key in td.keys){
                         if (key.equals("userImgUrl")) {
                             var userPic = td[key] as String
-                            Picasso.with(applicationContext).load(userPic).into(prfpic)
+                            Picasso.with(applicationContext).load(userPic).into(userSmallImg)
 
                         }
                     }
@@ -288,10 +301,22 @@ class FeedActivity : AppCompatActivity() {
     }
 
 
-    fun onAddItem(v: View) {
+    fun signOuttapped(v: View) {
         val i = Intent(this, SignInActivity::class.java)
         startActivity(i)
 
     }
+    fun goToProfile(v: View) {
+
+
+            var intent = Intent(this, ProfileActivity::class.java)
+            intent.putExtra("email", myemail)
+            intent.putExtra("uid", UserUID)
+
+            startActivityForResult(intent, PRFNEW)
+
+
+    }
+
 
 }

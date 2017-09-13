@@ -58,7 +58,7 @@
                 android:layout_alignParentRight="true"
                 android:layout_alignParentTop="true"
                 android:layout_weight="0"
-                android:background="@color/lowDarkfont"
+                android:background="@color/white"
 
 
                 android:src="@drawable/persoicon" />
@@ -85,12 +85,12 @@
 
             <ImageView
 
-                android:id="@+id/iv_share"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="0"
-                android:background="@drawable/ic_favorite_border_black_24dp" />
+                android:background="@color/white"
+                android:src="@drawable/empty_heart" />
 
 
         </LinearLayout>

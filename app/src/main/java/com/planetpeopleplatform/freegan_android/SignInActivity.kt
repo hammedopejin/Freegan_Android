@@ -32,6 +32,9 @@ class SignInActivity : AppCompatActivity() {
     private var database= FirebaseDatabase.getInstance()
     private var myRef=database.reference
 
+    val READIMAGE:Int=253
+    val PICK_IMAGE_CODE=123
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signin)
@@ -122,7 +125,7 @@ class SignInActivity : AppCompatActivity() {
         }
     }
 
-    val READIMAGE:Int=253
+
 
     fun checkPermission(){
 
@@ -155,7 +158,7 @@ class SignInActivity : AppCompatActivity() {
 
     }
 
-    val PICK_IMAGE_CODE=123
+
     fun loadImage(){
 
         var intent= Intent(Intent.ACTION_PICK,
