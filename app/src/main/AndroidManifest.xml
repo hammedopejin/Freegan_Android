@@ -14,10 +14,10 @@
         <activity android:name=".FeedActivity">
 
         </activity>
-        <activity android:name=".ProfileActivity">
+        <activity android:name=".Activity.ProfileActivity">
 
         </activity>
-        <activity android:name=".SignInActivity">
+        <activity android:name=".Activity.SignInActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

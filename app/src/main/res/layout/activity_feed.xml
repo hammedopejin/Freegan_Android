@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/whitebackground"
-    tools:context="com.planetpeopleplatform.freegan_android.FeedActivity">
+    tools:context="com.planetpeopleplatform.freegan_android.Activity.FeedActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -32,13 +32,14 @@
             android:text="Freegans"
             android:textSize="30dp" />
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
+            xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/userSmallImg"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginHorizontal="30dp"
             android:adjustViewBounds="false"
-            android:clickable="true"
+            android:cropToPadding="false"
             android:layoutDirection="rtl"
             android:onClick="goToProfile"
             android:src="@drawable/persoicon" />
@@ -47,11 +48,12 @@
     <SearchView
         android:id="@+id/searchView"
         android:layout_width="370dp"
-        android:layout_height="34dp"
+        android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/whiteback"
+        android:background="@color/white"
+        android:searchIcon="@android:drawable/ic_search_category_default"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar">
@@ -80,6 +82,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:orientation="horizontal"
+            android:paddingBottom="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
@@ -91,44 +94,43 @@
                 android:layout_height="49dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
-                android:background="@color/Primary"
+                android:background="@drawable/roundcornergreen"
                 android:onClick="imgBtn"
+                android:paddingBottom="8dp"
                 android:src="@drawable/add_image" />
 
             <EditText
-                android:id="@+id/editText4"
+                android:id="@+id/etItemDesc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:ems="10"
+                android:focusedByDefault="false"
+                android:imeOptions="normal|actionDone"
                 android:inputType="textPersonName"
-                android:text="Name" />
+                android:textColor="@color/black" />
 
             <ImageButton
                 android:id="@+id/imageButton7"
                 android:layout_width="49dp"
                 android:layout_height="49dp"
                 android:layout_weight="1"
-                android:background="@color/customRed"
-                android:onClick="backBtn"
+                android:background="@drawable/roundcornerred"
+                android:onClick="postBtnTapped"
                 android:src="@drawable/add_post" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
     <ListView
         android:id="@+id/lvPosts"
-        android:layout_width="344dp"
-        android:layout_height="388dp"
+        android:layout_width="346dp"
+        android:layout_height="0dp"
         android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:background="@color/white"
+        android:background="@color/whitebackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        tools:layout_editor_absoluteX="8dp"
-        tools:layout_editor_absoluteY="115dp" />
+        app:layout_constraintVertical_bias="0.0" />
 
 </android.support.constraint.ConstraintLayout>

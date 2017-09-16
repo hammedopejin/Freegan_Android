@@ -1,4 +1,4 @@
-package com.planetpeopleplatform.freegan_android
+package com.planetpeopleplatform.freegan_android.Activity
 
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -16,6 +16,8 @@ import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
+import com.planetpeopleplatform.freegan_android.FeedActivity
+import com.planetpeopleplatform.freegan_android.R
 import kotlinx.android.synthetic.main.activity_signin.*
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat

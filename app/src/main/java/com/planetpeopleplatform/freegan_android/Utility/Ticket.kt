@@ -1,4 +1,4 @@
-package com.planetpeopleplatform.freegan_android
+package com.planetpeopleplatform.freegan_android.Utility
 
 /**
  * Created by hammedopejin on 9/5/17.

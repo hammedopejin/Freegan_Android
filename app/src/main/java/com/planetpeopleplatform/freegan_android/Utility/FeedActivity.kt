@@ -16,6 +16,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
+import com.planetpeopleplatform.freegan_android.Activity.ProfileActivity
+import com.planetpeopleplatform.freegan_android.Activity.SignInActivity
+import com.planetpeopleplatform.freegan_android.Utility.Post
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_feed.*
 import kotlinx.android.synthetic.main.posts_ticket.view.*
@@ -28,16 +31,20 @@ class FeedActivity : AppCompatActivity() {
     private var database = FirebaseDatabase.getInstance()
     private var myRef = database.reference
 
-//    var ListTickets = ArrayList<Ticket>()
+    //    var ListTickets = ArrayList<Ticket>()
     var ListPosts = ArrayList<Post>()
-    var adpater:PostAdpater? = null
+    var adpater: PostAdpater? = null
     var myemail:String? = null
     var UserUID:String? = null
-    var userName:String? = null
+    var userName:String? = ""
+    var postDownloadURL:String? = ""
+    var userDownloadURL:String? = ""
+    var imageSelected:Boolean? = false
+    var picturePath:String? = ""
 
 
     val PRFNEW = 234
-    val PICK_IMAGE_CODE=123
+    val PICK_IMAGE_CODE = 123
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,11 +89,11 @@ class FeedActivity : AppCompatActivity() {
             var mypost = listTicketsAdpater[p0]
 
             if(mypost.userName.equals("loading")){
-                 myView=layoutInflater.inflate(R.layout.loading_ticket,null)
+                myView=layoutInflater.inflate(R.layout.loading_ticket,null)
                 return (myView as View?)!!
             }else{
 
-                 myView = layoutInflater.inflate(R.layout.posts_ticket,null)
+                myView = layoutInflater.inflate(R.layout.posts_ticket,null)
 
 
                 myRef.child("posts")
@@ -99,12 +106,11 @@ class FeedActivity : AppCompatActivity() {
                                     var td= dataSnapshot!!.value as HashMap<String,Any>
 
                                     for(key in td.keys){
-//                                        Toast.makeText(applicationContext,mypost.likes.toString(),Toast.LENGTH_LONG).show()
-                                            myView!!.userName.text= mypost.userName
-                                            Picasso.with(context).load(mypost.profileImgUrl).into(myView!!.user_img)
-                                            Picasso.with(context).load(mypost.imageUrl).into(myView!!.post_image)
-                                            myView!!.caption.text = mypost.description
-                                            myView!!.likes.text =  "" + mypost.likes as Int
+                                        myView!!.tvUserName.text= mypost.userName
+                                        Picasso.with(context).load(mypost.profileImgUrl).into(myView!!.user_img)
+                                        Picasso.with(context).load(mypost.imageUrl).into(myView!!.post_image)
+                                        myView!!.caption.text = mypost.description
+                                        myView!!.likes.text =  "" + mypost.likes as Int
 
                                     }
 
@@ -121,7 +127,7 @@ class FeedActivity : AppCompatActivity() {
 
 
 
-                return (myView as View?)!!
+                return myView!!
             }
 
 
@@ -168,10 +174,11 @@ class FeedActivity : AppCompatActivity() {
             val cursor= contentResolver.query(selectedImage,filePathColum,null,null,null)
             cursor.moveToFirst()
             val coulomIndex=cursor.getColumnIndex(filePathColum[0])
-            val picturePath=cursor.getString(coulomIndex)
+            picturePath=cursor.getString(coulomIndex)
             cursor.close()
             Picasso.with(this).load(selectedImage).into(img_post)
-            uploadImage(BitmapFactory.decodeFile(picturePath))
+            imageSelected = true
+
         }
         if(requestCode==PRFNEW  && data!=null && resultCode == RESULT_OK){
             userName = data.getStringExtra("userName")
@@ -181,11 +188,12 @@ class FeedActivity : AppCompatActivity() {
 
 
 
-    var DownloadURL:String?=""
+
+
 
     fun uploadImage(bitmap: Bitmap){
 //        ListTickets.add(0, Ticket("0","him","url","loading"))
-        adpater!!.notifyDataSetChanged()
+//        adpater!!.notifyDataSetChanged()
 
         val storage= FirebaseStorage.getInstance()
         val storgaRef=storage.getReferenceFromUrl("gs://freegan-42b40.appspot.com")
@@ -194,19 +202,20 @@ class FeedActivity : AppCompatActivity() {
         val imagePath= SplitString(myemail!!) + "."+ df.format(dataobj)+ ".jpg"
         val ImageRef=storgaRef.child("post-pics/"+imagePath )
         val baos= ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG,100,baos)
+        bitmap.compress(Bitmap.CompressFormat.JPEG,10,baos)
         val data= baos.toByteArray()
         val uploadTask=ImageRef.putBytes(data)
         uploadTask.addOnFailureListener{
             Toast.makeText(applicationContext,"fail to upload", Toast.LENGTH_LONG).show()
         }.addOnSuccessListener { taskSnapshot ->
-
-            DownloadURL= taskSnapshot.downloadUrl!!.toString()
+            Toast.makeText(applicationContext,"successfully uploaded image", Toast.LENGTH_LONG).show()
+            postDownloadURL = taskSnapshot.downloadUrl!!.toString()
 //            ListTickets.removeAt(0)
-            adpater!!.notifyDataSetChanged()
+//            adpater!!.notifyDataSetChanged()
 
         }
     }
+
 
 
     fun SplitString(email:String):String{
@@ -225,8 +234,8 @@ class FeedActivity : AppCompatActivity() {
 
                     for(key in td.keys){
                         if (key.equals("userImgUrl")) {
-                            var userPic = td[key] as String
-                            Picasso.with(applicationContext).load(userPic).into(userSmallImg)
+                            userDownloadURL = td[key] as String
+                            Picasso.with(applicationContext).load(userDownloadURL).into(userSmallImg)
 
                         }
                     }
@@ -251,16 +260,40 @@ class FeedActivity : AppCompatActivity() {
     }
 
 
-    fun backBtn(view: View) {
+    fun postBtnTapped(view: View){
+        var desc = etItemDesc.text.toString()
+        if(desc.equals("")){
+            Toast.makeText(applicationContext,"Item must have description", Toast.LENGTH_LONG).show()
+            return
+        }
+        if(imageSelected == false){
+            Toast.makeText(applicationContext,"An image must be selected", Toast.LENGTH_LONG).show()
+            return
+        }
+        uploadImage(BitmapFactory.decodeFile(picturePath))
 
 
-        myRef.child("posts").push().setValue(
-                Post("milk", DownloadURL!!, 0,  DownloadURL!!,"milk"))
-
-//        view.caption.setText("")
+        postToFirebase(this!!.postDownloadURL!!)
 
 
     }
+
+    fun postToFirebase(imgUrl: String?) {
+
+
+
+        val post =  Post(etItemDesc.text.toString(), imgUrl!!, 0, this!!.userDownloadURL!!, this.userName as String, 0)
+
+        myRef.child("posts").push().setValue(post)
+
+        img_post.setBackgroundResource(R.drawable.add_image)
+        etItemDesc.text.clear()
+        imageSelected = false
+
+        LoadPost()
+    }
+
+
 
     fun LoadPost(){
 
@@ -281,7 +314,7 @@ class FeedActivity : AppCompatActivity() {
                                 var post= td[key] as HashMap<String,Any>
 
 
-                                    ListPosts.add(Post(key, post))
+                                ListPosts.add(Post(key, post))
 
 
                             }
@@ -309,11 +342,11 @@ class FeedActivity : AppCompatActivity() {
     fun goToProfile(v: View) {
 
 
-            var intent = Intent(this, ProfileActivity::class.java)
-            intent.putExtra("email", myemail)
-            intent.putExtra("uid", UserUID)
+        var intent = Intent(this, ProfileActivity::class.java)
+        intent.putExtra("email", myemail)
+        intent.putExtra("uid", UserUID)
 
-            startActivityForResult(intent, PRFNEW)
+        startActivityForResult(intent, PRFNEW)
 
 
     }
