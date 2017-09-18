@@ -13,7 +13,7 @@ class Post{
     var userName:String?=null
     var likes:Int? = 0
     var profileImgUrl:String?=null
-    var postDate:Int?=0
+    var postDate:String?=null
 
     constructor(postKey: String, postData: HashMap<String, Any>) {
         this.postKey = postKey
@@ -37,12 +37,12 @@ class Post{
         val lkes = postData["likes"] as? Int
             this.likes = lkes
 
-        val pDate = postData["postDate"] as? Int
+        val pDate = postData["postDate"] as? String
         this.postDate = pDate
 
     }
 
-    constructor(description:String, imageUrl:String, likes:Int, profileImgUrl:String, userName:String, postDate:Int){
+    constructor(description:String, imageUrl:String, likes:Int, profileImgUrl:String, userName:String, postDate:String){
         this.postKey = postKey
         this.description=description
         this.imageUrl=imageUrl

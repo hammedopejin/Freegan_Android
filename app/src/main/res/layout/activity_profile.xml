@@ -82,6 +82,7 @@
         android:layout_gravity="center"
         android:layout_marginTop="12dp"
         android:background="@color/Secondary"
-        android:text="Update profile" />
+        android:text="Update profile"
+        android:onClick="updatePrfBtnTapped"/>
 
 </LinearLayout>

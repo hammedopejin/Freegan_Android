@@ -26,6 +26,10 @@ import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 
+/**
+ * Created by hammedopejin on 8/24/17.
+ */
+
 class FeedActivity : AppCompatActivity() {
 
     private var database = FirebaseDatabase.getInstance()
@@ -50,9 +54,10 @@ class FeedActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_feed)
 
-        var b:Bundle=intent.extras
-        myemail=b.getString("email")
-        UserUID=b.getString("uid")
+        var b:Bundle = intent.extras
+        myemail = b.getString("email")
+        UserUID = b.getString("uid")
+        userName = b.getString("userName")
 
 
 
@@ -62,6 +67,7 @@ class FeedActivity : AppCompatActivity() {
 
         LoadPost()
         loadUserPrfPic()
+        Toast.makeText(applicationContext,"my name is " + userName, Toast.LENGTH_LONG).show()
 
     }
 
@@ -190,7 +196,6 @@ class FeedActivity : AppCompatActivity() {
 
 
 
-
     fun uploadImage(bitmap: Bitmap){
 //        ListTickets.add(0, Ticket("0","him","url","loading"))
 //        adpater!!.notifyDataSetChanged()
@@ -210,6 +215,8 @@ class FeedActivity : AppCompatActivity() {
         }.addOnSuccessListener { taskSnapshot ->
             Toast.makeText(applicationContext,"successfully uploaded image", Toast.LENGTH_LONG).show()
             postDownloadURL = taskSnapshot.downloadUrl!!.toString()
+            this.picturePath = ""
+            postToFirebase()
 //            ListTickets.removeAt(0)
 //            adpater!!.notifyDataSetChanged()
 
@@ -236,6 +243,11 @@ class FeedActivity : AppCompatActivity() {
                         if (key.equals("userImgUrl")) {
                             userDownloadURL = td[key] as String
                             Picasso.with(applicationContext).load(userDownloadURL).into(userSmallImg)
+
+                        }
+                        if (key.equals("userName")) {
+                            userName = td[key] as String
+
 
                         }
                     }
@@ -270,28 +282,31 @@ class FeedActivity : AppCompatActivity() {
             Toast.makeText(applicationContext,"An image must be selected", Toast.LENGTH_LONG).show()
             return
         }
-        uploadImage(BitmapFactory.decodeFile(picturePath))
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 2
 
-
-        postToFirebase(this!!.postDownloadURL!!)
-
-
+        if(this!!.picturePath!!.equals("") == false) {
+            uploadImage(BitmapFactory.decodeFile(picturePath, options))
+        }
     }
 
-    fun postToFirebase(imgUrl: String?) {
+    fun postToFirebase() {
 
 
+        val sfd = SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        val dataobj= Date()
 
-        val post =  Post(etItemDesc.text.toString(), imgUrl!!, 0, this!!.userDownloadURL!!, this.userName as String, 0)
+        val post =  Post(etItemDesc.text.toString(), this!!.postDownloadURL!!, 0, this!!.userDownloadURL!!, this.userName!! as String, sfd.format(dataobj))
 
         myRef.child("posts").push().setValue(post)
 
-        img_post.setBackgroundResource(R.drawable.add_image)
+        img_post.setImageResource(R.drawable.add_image)
         etItemDesc.text.clear()
         imageSelected = false
 
         LoadPost()
     }
+
 
 
 
@@ -345,6 +360,7 @@ class FeedActivity : AppCompatActivity() {
         var intent = Intent(this, ProfileActivity::class.java)
         intent.putExtra("email", myemail)
         intent.putExtra("uid", UserUID)
+        intent.putExtra("userName", userName)
 
         startActivityForResult(intent, PRFNEW)
 

@@ -34,14 +34,16 @@ class ProfileActivity : AppCompatActivity(){
     var myemail:String? = null
     var UserUID:String? = null
     var userName:String? = null
+    var picturePath:String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        var b: Bundle =intent.extras
-        myemail=b.getString("email")
-        UserUID=b.getString("uid")
+        var b: Bundle = intent.extras
+        myemail = b.getString("email")
+        UserUID = b.getString("uid")
+        userName = b.getString("userName")
 
 
 
@@ -76,10 +78,9 @@ class ProfileActivity : AppCompatActivity(){
             val cursor= contentResolver.query(selectedImage,filePathColum,null,null,null)
             cursor.moveToFirst()
             val coulomIndex=cursor.getColumnIndex(filePathColum[0])
-            val picturePath=cursor.getString(coulomIndex)
+            picturePath=cursor.getString(coulomIndex)
             cursor.close()
             Picasso.with(this).load(selectedImage).into(profileImg)
-            uploadImage(BitmapFactory.decodeFile(picturePath))
         }
 
     }
@@ -175,5 +176,17 @@ class ProfileActivity : AppCompatActivity(){
         finish()
 
     }
+    fun updatePrfBtnTapped(view: View) {
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 2
+        uploadImage(BitmapFactory.decodeFile(picturePath, options))
+
+        if (etUserName.text.toString() != "") {
+            this.userName = etUserName.text.toString()
+            myRef.child("users").child(UserUID).child("userName").setValue(this.userName)
+            etUserName.text.clear()
+        }
+    }
+
 
 }

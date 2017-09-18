@@ -118,10 +118,11 @@ class SignInActivity : AppCompatActivity() {
 
         if(currentUser!=null) {
 
-
+            var name = etUserName.text.toString()
             var intent = Intent(this, FeedActivity::class.java)
             intent.putExtra("email", currentUser.email)
             intent.putExtra("uid", currentUser.uid)
+            intent.putExtra("userName", name)
 
             startActivity(intent)
         }
@@ -180,7 +181,9 @@ class SignInActivity : AppCompatActivity() {
             val coulomIndex=cursor.getColumnIndex(filePathColum[0])
             val picturePath=cursor.getString(coulomIndex)
             cursor.close()
-            userImg.setImageBitmap(BitmapFactory.decodeFile(picturePath))
+            val options = BitmapFactory.Options()
+            options.inSampleSize = 2
+            userImg.setImageBitmap(BitmapFactory.decodeFile(picturePath,options))
         }
 
     }

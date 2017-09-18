@@ -175,7 +175,6 @@
                     android:layout_weight="1"
                     android:background="@color/white"
                     android:gravity="center_vertical"
-                    android:paddingEnd="1dp"
                     android:text="3888"
 
                     android:textAppearance="?android:attr/textAppearanceSmall"
