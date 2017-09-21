@@ -11,10 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.Toast
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.planetpeopleplatform.freegan_android.Activity.ProfileActivity
 import com.planetpeopleplatform.freegan_android.Activity.SignInActivity
@@ -25,6 +22,7 @@ import kotlinx.android.synthetic.main.posts_ticket.view.*
 import java.io.ByteArrayOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 /**
  * Created by hammedopejin on 8/24/17.
@@ -34,6 +32,9 @@ class FeedActivity : AppCompatActivity() {
 
     private var database = FirebaseDatabase.getInstance()
     private var myRef = database.reference
+
+    lateinit var likesRef: DatabaseReference
+    var post: Post? = null
 
     //    var ListTickets = ArrayList<Ticket>()
     var ListPosts = ArrayList<Post>()
@@ -67,7 +68,6 @@ class FeedActivity : AppCompatActivity() {
 
         LoadPost()
         loadUserPrfPic()
-        Toast.makeText(applicationContext,"my name is " + userName, Toast.LENGTH_LONG).show()
 
     }
 
@@ -92,11 +92,13 @@ class FeedActivity : AppCompatActivity() {
         override fun getView(p0: Int, p1: View?, p2: ViewGroup?): View {
 
 
-            var mypost = listTicketsAdpater[p0]
+            post = listTicketsAdpater[p0]
 
-            if(mypost.userName.equals("loading")){
-                myView=layoutInflater.inflate(R.layout.loading_ticket,null)
-                return (myView as View?)!!
+            likesRef = myRef.child("users").child(UserUID).child("likes").child(post!!.postKey)
+
+            if(post!!.userName.equals("loading")){
+                myView = layoutInflater.inflate(R.layout.loading_ticket,null)
+                return myView!!
             }else{
 
                 myView = layoutInflater.inflate(R.layout.posts_ticket,null)
@@ -112,11 +114,24 @@ class FeedActivity : AppCompatActivity() {
                                     var td= dataSnapshot!!.value as HashMap<String,Any>
 
                                     for(key in td.keys){
-                                        myView!!.tvUserName.text= mypost.userName
-                                        Picasso.with(context).load(mypost.profileImgUrl).into(myView!!.user_img)
-                                        Picasso.with(context).load(mypost.imageUrl).into(myView!!.post_image)
-                                        myView!!.caption.text = mypost.description
-                                        myView!!.likes.text =  "" + mypost.likes as Int
+                                        myView!!.tvUserName.text= post!!.userName
+                                        Picasso.with(context).load(post!!.profileImgUrl).into(myView!!.user_img)
+                                        Picasso.with(context).load(post!!.imageUrl).into(myView!!.post_image)
+                                        myView!!.caption.text = post!!.description
+                                        myView!!.likes.text =  "" + post!!.likes
+                                        myView!!.tv_tweet_date.text = post!!.postDate
+
+                                        likesRef.addListenerForSingleValueEvent(object :ValueEventListener{
+                                            override fun onDataChange(dataSnapshot: DataSnapshot?) {
+                                                //Toast.makeText(applicationContext, dataSnapshot!!.value.toString(), Toast.LENGTH_LONG).show()
+                                                if (dataSnapshot!!.value == true || check == true) {
+                                                    myView!!.loveImg.setImageResource(R.drawable.filled_heart)
+                                                } else {
+                                                    myView!!.loveImg.setImageResource(R.drawable.empty_heart)
+                                                }
+                                            }
+                                            override fun onCancelled(p0: DatabaseError?) {}
+                                        })
 
                                     }
 
@@ -130,8 +145,6 @@ class FeedActivity : AppCompatActivity() {
 
                             }
                         })
-
-
 
                 return myView!!
             }
@@ -296,7 +309,14 @@ class FeedActivity : AppCompatActivity() {
         val sfd = SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         val dataobj= Date()
 
-        val post =  Post(etItemDesc.text.toString(), this!!.postDownloadURL!!, 0, this!!.userDownloadURL!!, this.userName!! as String, sfd.format(dataobj))
+        //val post =  Post(etItemDesc.text.toString(), this!!.postDownloadURL!!, 0 as Any, this!!.userDownloadURL!!, this.userName!! as String, sfd.format(dataobj))
+        val post : HashMap<String, Any> = HashMap<String, Any>()
+            post.put("description", etItemDesc.text.toString() as Any)
+            post.put("imageUrl", this!!.postDownloadURL!! as Any)
+            post.put("likes", 0 as Any)
+            post.put("profileImgUrl", this!!.userDownloadURL!! as Any)
+            post.put("userName", this.userName!! as Any)
+            post.put("postDate", sfd.format(dataobj) as Any)
 
         myRef.child("posts").push().setValue(post)
 
@@ -324,17 +344,20 @@ class FeedActivity : AppCompatActivity() {
 
                             var td= dataSnapshot!!.value as HashMap<String,Any>
 
-                            for(key in td.keys){
-
-                                var post= td[key] as HashMap<String,Any>
-
-
+                            for(key in td.keys) {
+                                var likes: Any = 0
+                                var post = td[key] as HashMap<String, Any>
                                 ListPosts.add(Post(key, post))
+                                for (keey in post) {
+                                    if (keey.key == "likes") {
+                                        likes = keey.value
+                                        ListPosts.last().likes = likes
+                                    }
+
+                                }
 
 
                             }
-
-
 
                             adpater!!.notifyDataSetChanged()
                         }catch (ex:Exception){}
@@ -366,6 +389,24 @@ class FeedActivity : AppCompatActivity() {
 
 
     }
+    var check = false
+
+    fun likeTapped(v: View) {
+        if (check == false) {
+            v.loveImg.setImageResource(R.drawable.filled_heart)
+            post!!.adjustLikes(true)
+            likesRef.setValue(true)
+            check = true
+
+        } else {
+            v.loveImg.setImageResource(R.drawable.empty_heart)
+            post!!.adjustLikes(false)
+            likesRef.removeValue()
+            check = false
+
+        }
+    }
+
 
 
 }

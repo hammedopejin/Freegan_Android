@@ -1,19 +1,26 @@
 package com.planetpeopleplatform.freegan_android.Utility
 
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+
 /**
  * Created by hammedopejin on 9/5/17.
  */
 
 class Post{
 
+    private var database = FirebaseDatabase.getInstance()
+    private var myRef = database.reference
 
     var postKey:String?=null
     var description:String?=null
     var imageUrl:String?=null
     var userName:String?=null
-    var likes:Int? = 0
-    var profileImgUrl:String?=null
-    var postDate:String?=null
+    var likes:Any? = 0
+    var profileImgUrl:String? = null
+    var postDate:String? = null
+
+    lateinit var postRef: DatabaseReference
 
     constructor(postKey: String, postData: HashMap<String, Any>) {
         this.postKey = postKey
@@ -40,9 +47,11 @@ class Post{
         val pDate = postData["postDate"] as? String
         this.postDate = pDate
 
+        postRef = myRef.child("posts").child(postKey)
+
     }
 
-    constructor(description:String, imageUrl:String, likes:Int, profileImgUrl:String, userName:String, postDate:String){
+    constructor(postKey: String, description:String, imageUrl:String, likes:Int, profileImgUrl:String, userName:String, postDate:String){
         this.postKey = postKey
         this.description=description
         this.imageUrl=imageUrl
@@ -50,6 +59,16 @@ class Post{
         this.profileImgUrl=profileImgUrl
         this.userName=userName
         this.postDate=postDate
+
+    }
+
+    fun adjustLikes(addLike: Boolean) {
+        if (addLike == true) {
+            likes = likes!! as Long + 1
+        } else {
+            likes = likes!! as Long - 1
+        }
+        postRef.child("likes").setValue(likes)
 
     }
 

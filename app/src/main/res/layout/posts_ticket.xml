@@ -83,12 +83,13 @@
                 android:textStyle="bold" />
 
             <ImageView
-
+                android:id="@+id/loveImg"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_marginRight="8dp"
                 android:layout_weight="0"
                 android:background="@color/white"
+                android:onClick="likeTapped"
                 android:src="@drawable/empty_heart" />
 
 
