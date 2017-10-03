@@ -118,7 +118,7 @@ class SignInActivity : AppCompatActivity() {
 
         if(currentUser!=null) {
 
-            var name = etUserName.text.toString()
+            var name = eTUserName.text.toString()
             var intent = Intent(this, FeedActivity::class.java)
             intent.putExtra("email", currentUser.email)
             intent.putExtra("uid", currentUser.uid)

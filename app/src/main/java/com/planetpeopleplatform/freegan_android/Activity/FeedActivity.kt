@@ -306,7 +306,7 @@ class FeedActivity : AppCompatActivity() {
     fun postToFirebase() {
 
 
-        val sfd = SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        val sfd = SimpleDateFormat("yyyy-MM-dd");
         val dataobj= Date()
 
         //val post =  Post(etItemDesc.text.toString(), this!!.postDownloadURL!!, 0 as Any, this!!.userDownloadURL!!, this.userName!! as String, sfd.format(dataobj))

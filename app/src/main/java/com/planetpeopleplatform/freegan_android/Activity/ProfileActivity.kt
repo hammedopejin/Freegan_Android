@@ -51,11 +51,6 @@ class ProfileActivity : AppCompatActivity(){
 
     }
 
-    override fun onResume() {
-        super.onResume()
-        loadUserPrfPic()
-    }
-
 
 
 
@@ -145,6 +140,10 @@ class ProfileActivity : AppCompatActivity(){
                             Picasso.with(applicationContext).load(userPicUrl).into(profileImg)
 
                         }
+                        if(key.equals("userName")){
+                            tfUserName.text = td[key] as String
+                            eTUserName.hint = td[key] as String
+                        }
                     }
 
 
@@ -162,7 +161,7 @@ class ProfileActivity : AppCompatActivity(){
 
 
 
-    fun imgBtn(view: View) {
+    fun prfImgBtn(view: View) {
         loadImage()
     }
 
@@ -179,12 +178,14 @@ class ProfileActivity : AppCompatActivity(){
     fun updatePrfBtnTapped(view: View) {
         val options = BitmapFactory.Options()
         options.inSampleSize = 2
-        uploadImage(BitmapFactory.decodeFile(picturePath, options))
-
-        if (etUserName.text.toString() != "") {
-            this.userName = etUserName.text.toString()
+        if(picturePath != null) {
+            uploadImage(BitmapFactory.decodeFile(picturePath, options))
+        }
+        if (eTUserName.text.toString() != "") {
+            this.userName = eTUserName.text.toString()
             myRef.child("users").child(UserUID).child("userName").setValue(this.userName)
-            etUserName.text.clear()
+            eTUserName.text.clear()
+            eTUserName.hint = this.userName
         }
     }
 
