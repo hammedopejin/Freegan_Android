@@ -16,6 +16,7 @@ class Post{
     var description:String?=null
     var imageUrl:String?=null
     var userName:String?=null
+    var postUserObjectId:String?=null
     var likes:Any? = 0
     var profileImgUrl:String? = null
     var postDate:String? = null
@@ -40,6 +41,8 @@ class Post{
         val usrNam = postData["userName"] as? String
             this.userName = usrNam
 
+        val pstUserObId = postData["postUserObjectId"] as? String
+        this.postUserObjectId = pstUserObId
 
         val lkes = postData["likes"] as? Int
             this.likes = lkes

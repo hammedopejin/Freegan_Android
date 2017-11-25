@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/whitebackground">
+    android:background="@color/whiteback"
+    android:orientation="vertical">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar"
@@ -15,63 +15,82 @@
         android:minHeight="?attr/actionBarSize">
 
         <ImageView
-            android:id="@+id/signOuttapped"
+            android:id="@+id/goBackToMyPosts"
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_marginHorizontal="20dp"
             android:adjustViewBounds="false"
-            android:onClick="signOuttapped"
-            android:src="@drawable/sign_out" />
+            android:onClick="goBackToMyPosts"
+            android:src="@drawable/back_arrow2x" />
 
 
         <android.support.v7.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="45dp"
-            android:text="Freegans"
+            android:text="Edit Post"
             android:textSize="30dp" />
-
-        <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-            android:id="@+id/userSmallImg"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginHorizontal="30dp"
-            android:adjustViewBounds="false"
-            android:cropToPadding="false"
-            android:layoutDirection="rtl"
-            android:onClick="goToProfile"
-            android:src="@drawable/persoicon" />
 
     </android.support.v7.widget.Toolbar>
 
+    <LinearLayout
+        android:id="@+id/llContactGiver"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/background"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingRight="5dp"
+        android:textAlignment="center">
 
-    <android.support.v7.widget.SearchView
-        android:id="@+id/searchView"
-        android:layout_width="370dp"
-        android:layout_height="40dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:searchIcon="@android:drawable/ic_search_category_default"
-        android:textColor="@color/black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:searchIcon="@android:drawable/ic_menu_search" />
+        <ImageView
+            android:id="@+id/post_image"
+            android:layout_width="fill_parent"
+            android:layout_height="70pt"
+            android:layout_alignBottom="@+id/txtflollower"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_weight="0"
+            android:background="@color/white"
+            android:scaleType="fitXY"
+            android:src="@drawable/placeholder" />
+
+        <TextView
+            android:id="@+id/caption"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/white"
+            android:gravity="left"
+            android:paddingBottom="0dp"
+            android:paddingLeft="0dp"
+            android:paddingRight="0dp"
+            android:paddingTop="0dp"
+            android:text="Love new twitter feathers, looking forword for new addation feather"
+            android:textColor="#000000" />
+    </LinearLayout>
+
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/constraintLayout"
-        android:layout_width="346dp"
+        android:layout_width="366dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:background="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchView"
-        tools:layout_editor_absoluteX="6dp"
-        tools:layout_editor_absoluteY="51dp">
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -83,24 +102,21 @@
             android:focusableInTouchMode="true"
             android:orientation="horizontal"
             android:paddingBottom="8dp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintStart_toStartOf="parent">
 
             <ImageButton
-                android:id="@+id/img_post"
+                android:id="@+id/img_post2"
                 android:layout_width="49dp"
                 android:layout_height="49dp"
                 android:layout_weight="1"
                 android:adjustViewBounds="true"
                 android:background="@drawable/roundcornergreen"
-                android:onClick="imgBtn"
+                android:onClick="imgBtn2"
                 android:paddingBottom="8dp"
                 android:src="@drawable/add_image" />
 
             <EditText
-                android:id="@+id/etItemDesc"
+                android:id="@+id/etItemDesc2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
@@ -114,29 +130,15 @@
                 android:textColorHint="@color/whitebackground" />
 
             <ImageButton
-                android:id="@+id/postBtn"
+                android:id="@+id/postBtn2"
                 android:layout_width="49dp"
                 android:layout_height="49dp"
                 android:layout_weight="1"
                 android:background="@drawable/roundcornerred"
-                android:onClick="postBtnTapped"
+                android:onClick="postBtnTapped2"
                 android:src="@drawable/add_post" />
         </LinearLayout>
     </android.support.constraint.ConstraintLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/lvPosts"
-        android:layout_width="0dp"
-        android:layout_height="420dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:background="@color/whitebackground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.01"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/constraintLayout"
-        app:layout_constraintVertical_bias="0.0" />
 
-</android.support.constraint.ConstraintLayout>
+</LinearLayout>

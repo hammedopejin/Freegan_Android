@@ -29,12 +29,15 @@ class ProfileActivity : AppCompatActivity(){
     private var myRef = database.reference
 
     val PICK_IMAGE_CODE=123
+    val MYPST = 234
 
-    var userPicUrl:String? = null
-    var myemail:String? = null
-    var UserUID:String? = null
-    var userName:String? = null
-    var picturePath:String? = null
+    var userPicUrl:String? = ""
+    var myemail:String? = ""
+    var UserUID:String? = ""
+    var userName:String? = ""
+    var picturePath:String? = ""
+    var DownloadURL:String?=""
+    var imageSelected:Boolean? = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,11 +53,6 @@ class ProfileActivity : AppCompatActivity(){
         loadUserPrfPic()
 
     }
-
-
-
-
-
 
     fun loadImage(){
 
@@ -76,13 +74,10 @@ class ProfileActivity : AppCompatActivity(){
             picturePath=cursor.getString(coulomIndex)
             cursor.close()
             Picasso.with(this).load(selectedImage).into(profileImg)
+            imageSelected = true
         }
 
     }
-
-
-
-    var DownloadURL:String?=""
 
     fun uploadImage(bitmap: Bitmap){
 //        ListTickets.add(0, Ticket("0","him","url","loading"))
@@ -111,6 +106,8 @@ class ProfileActivity : AppCompatActivity(){
             Toast.makeText(applicationContext,"New pic successfully uploaded", Toast.LENGTH_LONG).show()
             DownloadURL= taskSnapshot.downloadUrl!!.toString()
 //            ListTickets.removeAt(0)
+            this.picturePath = ""
+            this.imageSelected = false
             myRef.child("users").child(UserUID).child("userImgUrl").setValue(DownloadURL)
             loadUserPrfPic()
 
@@ -155,39 +152,43 @@ class ProfileActivity : AppCompatActivity(){
         })
     }
 
-
-
-
-
-
-
     fun prfImgBtn(view: View) {
         loadImage()
     }
-
-
-
 
     fun goToFeed(view: View) {
         var data = Intent()
         data.putExtra("userName", userName)
         setResult(Activity.RESULT_OK, data)
         finish()
-
     }
+
     fun updatePrfBtnTapped(view: View) {
-        val options = BitmapFactory.Options()
-        options.inSampleSize = 2
-        if(picturePath != null) {
-            uploadImage(BitmapFactory.decodeFile(picturePath, options))
-        }
         if (eTUserName.text.toString() != "") {
             this.userName = eTUserName.text.toString()
             myRef.child("users").child(UserUID).child("userName").setValue(this.userName)
             eTUserName.text.clear()
             eTUserName.hint = this.userName
         }
+
+        if(imageSelected == true){
+
+        val options = BitmapFactory.Options()
+        options.inSampleSize = 2
+
+            if(this!!.picturePath!!.equals("") == false) {
+                uploadImage(BitmapFactory.decodeFile(picturePath, options))
+            }
+        }
     }
 
+    fun goToMyPosts(view: View) {
+        var intent = Intent(this, MyPostsActivity::class.java)
+        intent.putExtra("email", myemail)
+        intent.putExtra("uid", UserUID)
+        intent.putExtra("userName", userName)
+
+        startActivityForResult(intent, MYPST)
+    }
 
 }

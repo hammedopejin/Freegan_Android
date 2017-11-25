@@ -20,7 +20,8 @@
             android:layout_height="45dp"
             android:layout_marginHorizontal="20dp"
             android:adjustViewBounds="false"
-            android:src="@drawable/sign_out" />
+            android:onClick="backBtn"
+            android:src="@drawable/back_arrow2x" />
 
 
         <android.support.v7.widget.AppCompatTextView

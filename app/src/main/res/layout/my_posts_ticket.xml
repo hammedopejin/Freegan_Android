@@ -10,12 +10,11 @@
     android:focusableInTouchMode="false"
     android:gravity="center"
     android:layoutDirection="rtl"
-
     android:orientation="vertical"
     android:textAlignment="center">
 
     <LinearLayout
-        android:id="@+id/llContactGiver"
+        android:id="@+id/llGoToEditPost"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="5dp"
@@ -26,74 +25,15 @@
         android:background="@drawable/background"
         android:gravity="center"
         android:layoutDirection="rtl"
+
         android:orientation="vertical"
 
         android:paddingRight="5dp"
 
         android:textAlignment="center">
 
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="0"
-            android:background="@drawable/background"
-            android:gravity="center"
-            android:layoutDirection="ltr"
-            android:orientation="horizontal"
-
-            android:paddingBottom="1dp"
-            android:paddingLeft="3dp"
-            android:paddingRight="3dp"
-
-            android:paddingTop="1dp"
-            android:textAlignment="center">
-
-            <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                android:id="@+id/user_img"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignBottom="@+id/txtflollower"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentTop="true"
-                android:layout_weight="0"
-                android:adjustViewBounds="false"
-                android:src="@drawable/persoicon" />
-
-            <TextView
-                android:id="@+id/tvUserName"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toEndOf="@+id/bulogin"
-                android:layout_toLeftOf="@+id/webView"
-                android:layout_toRightOf="@+id/bulogin"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:focusable="false"
-                android:focusableInTouchMode="false"
-                android:gravity="center"
-                android:paddingRight="3dp"
-                android:text="User name"
-                android:textAppearance="?android:attr/textAppearanceLarge"
-                android:textColor="@color/customRed"
-                android:textSize="18dp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/loveImg"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_marginRight="8dp"
-                android:layout_weight="0"
-                android:background="@color/white"
-                android:src="@drawable/empty_heart" />
-
-
-        </LinearLayout>
-
         <ImageView
-            android:id="@+id/post_image"
+            android:id="@+id/post_image2"
             android:layout_width="fill_parent"
             android:layout_height="70pt"
             android:layout_alignBottom="@+id/txtflollower"
@@ -109,7 +49,7 @@
             android:src="@drawable/placeholder" />
 
         <TextView
-            android:id="@+id/caption"
+            android:id="@+id/caption2"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -158,7 +98,7 @@
                     android:textSize="16dp" />
 
                 <TextView
-                    android:id="@+id/likes"
+                    android:id="@+id/likes2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -184,13 +124,13 @@
                 android:paddingTop="3dp">
 
                 <TextView
-                    android:id="@+id/tv_tweet_date"
+                    android:id="@+id/tv_tweet_date2"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:alpha="0.79"
                     android:background="@color/white"
-                    android:paddingLeft="10dp"
                     android:gravity="left|center_vertical|center_horizontal"
+                    android:paddingLeft="10dp"
                     android:text="2015-12-11"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="#000000"
